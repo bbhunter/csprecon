@@ -101,16 +101,33 @@ func TestDomainOk(t *testing.T) {
 		},
 		{
 			name:    "subdomain ok",
-			input:   "google.com",
-			domains: []string{"ciao.com", "google.com", "dc.google.com"},
+			input:   "dc.google.com",
+			domains: []string{"ciao.com", "google.com"},
 			want:    true,
 		},
-
 		{
 			name:    "subdomain ok 2",
-			input:   "google.com",
-			domains: []string{"ciao.com", "google.com", "dc.*.google.com"},
+			input:   "dc.*.google.com",
+			domains: []string{"ciao.com", "google.com"},
 			want:    true,
+		},
+		{
+			name:    "subdomain not ok 1",
+			input:   "dc.*.google.com",
+			domains: []string{"ciao.com", "goooooooogle.com"},
+			want:    false,
+		},
+		{
+			name:    "subdomain not ok 2",
+			input:   "dc.*.agoogle.com",
+			domains: []string{"ciao.com", "google.com"},
+			want:    false,
+		},
+		{
+			name:    "subdomain not ok 3",
+			input:   "agoogle.com",
+			domains: []string{"ciao.com", "aaagoogle.com"},
+			want:    false,
 		},
 	}
 	for _, tt := range tests {
